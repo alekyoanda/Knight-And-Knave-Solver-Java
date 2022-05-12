@@ -32,6 +32,12 @@ public class MainProgram {
 
         HashMap<String, Boolean> result = Model.solveModel(sentencesDict);
 
-        System.out.println(result.toString());
+        if (result == null){
+            System.out.println("No solution");
+        }
+        else{
+            System.out.println(result);
+        }
+
     }
 }

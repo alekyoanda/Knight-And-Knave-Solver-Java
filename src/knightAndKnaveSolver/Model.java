@@ -27,6 +27,7 @@ public class Model {
             }
             speakerIndex++;
         }
+
         LogicalOperator finalKnowledge = unionKnowledge(knowledges);
 
         return checkAll(sentencesDict.size(), finalKnowledge);
@@ -152,7 +153,7 @@ public class Model {
     }
 
     private static HashMap<String, Boolean> checkAll(int amountOfPeople, LogicalOperator finalKnowledge){
-        ArrayList<Boolean> premisesTruth = new ArrayList<>();
+        ArrayList<Boolean> premisesTruth;
         HashMap<String, Boolean> solution = new HashMap<>();
         int counter = 0;
 
