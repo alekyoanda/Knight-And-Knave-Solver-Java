@@ -15,7 +15,7 @@ public class InputNameGUI {
     ArrayList<JLabel> textFieldsLabels= new ArrayList<>();
     ArrayList<JTextField> textFields= new ArrayList<>();
 
-    ArrayList<String> peoplesName = new ArrayList<>();
+    HashMap<String, String> peoplesName = new HashMap<>();
 
     public InputNameGUI(JFrame frame, String amountOfPeople){
         this.amountOfPeople = Integer.parseInt(amountOfPeople);
@@ -28,6 +28,7 @@ public class InputNameGUI {
         JPanel panelError = new JPanel();
         panelError.setLayout(new FlowLayout());
         invalidMessage = new JLabel();
+        invalidMessage.setForeground(Color.RED);
 
         JPanel panelBtn = new JPanel();
         panelBtn.setLayout(new FlowLayout());
@@ -45,7 +46,7 @@ public class InputNameGUI {
                         break;
                     }
                     else {
-                        peoplesName.add(textFields.get(i).getText());
+                        peoplesName.put(String.valueOf((char)(i + 65)), textFields.get(i).getText());
                     }
                 }
                 if (isValid){

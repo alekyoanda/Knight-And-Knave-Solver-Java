@@ -4,15 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InstructionsGUI {
-    public InstructionsGUI(JFrame frame, String amountOfPeople, ArrayList<String> peoplesName){
+    int amountOfPeople;
+
+    public InstructionsGUI(JFrame frame, String amountOfPeople, HashMap<String, String> peoplesName){
+        this.amountOfPeople = Integer.parseInt(amountOfPeople);
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(4, 1));
 
         JPanel panel1 = new JPanel();
-        JLabel label1 =  new JLabel("Lorem ipsum");
+
+        String eachPersonSymbol = "";
+        for (String key: peoplesName.keySet()){
+            eachPersonSymbol += String.format("<html>%s corresponds to %s<br>", key, peoplesName.get(key));
+        }
+        eachPersonSymbol += "</html>";
+        JLabel label1 =  new JLabel(eachPersonSymbol);
 
         JPanel panel2 = new JPanel();
         JLabel label2 =  new JLabel("Lorem ipsum");
@@ -28,7 +38,7 @@ public class InstructionsGUI {
             @Override
             public void actionPerformed(ActionEvent e){
                 frame.remove(mainPanel);
-                new InputNameGUI(frame, amountOfPeople);
+                new InputSentencesGUI(frame, amountOfPeople, peoplesName);
             }
         });
 

@@ -15,23 +15,23 @@ public class Model {
         put("'", 1);
     }};
 
-    public static HashMap<String, Boolean> solveModel(HashMap<String, ArrayList<String>> sentencesDict){
+    public static HashMap<String, Boolean> solveModel(HashMap<String, String> sentencesEachPerson) {
         ArrayList<Object> knowledges = new ArrayList<>();
         int speakerIndex = 0;
-        for (String speaker: sentencesDict.keySet()){
-            for (int i=0; i<sentencesDict.get(speaker).size(); i++){
-                if (isValidInput(sentencesDict.get(speaker).get(i))){
-                    knowledges.add(makeBiimplication(makeModel(sentencesDict.get(speaker).get(i)), speakerIndex));
-                }
-                else return null;
+        for (String speaker : sentencesEachPerson.keySet()) {
+            if (isValidInput(sentencesEachPerson.size(), sentencesEachPerson.get(speaker).toUpperCase())) {
+                knowledges.add(makeBiimplication(makeModel(sentencesEachPerson.get(speaker).toUpperCase()), speakerIndex));
             }
+            else return null;
+
             speakerIndex++;
         }
 
         LogicalOperator finalKnowledge = unionKnowledge(knowledges);
 
-        return checkAll(sentencesDict.size(), finalKnowledge);
+        return checkAll(sentencesEachPerson.size(),finalKnowledge);
     }
+
 
     public static Object makeModel(String premises){
         // Base case
@@ -173,7 +173,7 @@ public class Model {
         return null;
     }
 
-    private static boolean isValidInput(String premises){
+    private static boolean isValidInput(int amountOfPeople, String premises){
         ArrayList<String> characterAllowed = new ArrayList<>(
                 Arrays.asList("(", ")", "<=>", "=>", "'", "&&", "||")
         );
@@ -183,7 +183,7 @@ public class Model {
         boolean alphaBefore = false;
 
         while (i != premises.length()){
-            if (!Character.isAlphabetic(premises.charAt(i))){
+            if (!((int) (premises.charAt(i)) >= 65 && (int) (premises.charAt(i)) < 65 + amountOfPeople)){
                 boolean characterExist = false;
                 for (String chr: characterAllowed){
                     if (!(i + chr.length() > premises.length()) && chr.equals(premises.substring(i, i+chr.length()))){
