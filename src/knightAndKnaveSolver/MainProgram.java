@@ -1,5 +1,7 @@
 package knightAndKnaveSolver;
 
+import knightAndKnaveSolver.Model.Model;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;

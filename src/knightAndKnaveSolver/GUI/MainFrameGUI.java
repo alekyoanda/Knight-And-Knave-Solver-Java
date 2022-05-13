@@ -2,8 +2,8 @@ package knightAndKnaveSolver.GUI;
 
 import javax.swing.*;
 
-public class MainFrame extends JFrame{
-    public MainFrame(){
+public class MainFrameGUI extends JFrame{
+    public MainFrameGUI(){
         setTitle("Knight and Knave Solver");
         setSize(450, 280);
         setLocationRelativeTo(null);

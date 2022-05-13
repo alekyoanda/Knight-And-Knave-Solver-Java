@@ -1,4 +1,4 @@
-package knightAndKnaveSolver;
+package knightAndKnaveSolver.Model;
 
 import knightAndKnaveSolver.logicalOperator.*;
 

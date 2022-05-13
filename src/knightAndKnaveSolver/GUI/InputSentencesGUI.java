@@ -1,4 +1,5 @@
 package knightAndKnaveSolver.GUI;
 
-public class ModelProcessing {
+public class InputSentencesGUI {
+
 }
