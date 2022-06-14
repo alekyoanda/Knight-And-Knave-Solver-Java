@@ -2,7 +2,7 @@ package knightAndKnaveSolver.logicalOperator;
 
 import java.util.ArrayList;
 
-public class And extends LogicalOperator{
+public class And implements LogicalOperator{
     private ArrayList<Object> sentences = new ArrayList<>();
 
     public And(Object... sentences){

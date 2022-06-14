@@ -2,7 +2,7 @@ package knightAndKnaveSolver.logicalOperator;
 
 import java.util.ArrayList;
 
-public class Biimplication extends LogicalOperator{
+public class Biimplication implements LogicalOperator{
     private Object left;
     private Object right;
 

@@ -2,7 +2,7 @@ package knightAndKnaveSolver.logicalOperator;
 
 import java.util.ArrayList;
 
-public class Implication extends LogicalOperator{
+public class Implication implements LogicalOperator{
     private Object antecedent;
     private Object consequent;
 

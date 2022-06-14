@@ -2,7 +2,7 @@ package knightAndKnaveSolver.logicalOperator;
 
 import java.util.ArrayList;
 
-public class Not extends LogicalOperator{
+public class Not implements LogicalOperator{
     private Object operand;
 
     public Not(Object operand){
