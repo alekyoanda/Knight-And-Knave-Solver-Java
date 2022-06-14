@@ -1,5 +1,7 @@
 package knightAndKnaveSolver.GUI;
 
+import knightAndKnaveSolver.GUI.JCustomTemplate.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,39 +11,37 @@ import java.util.HashMap;
 
 public class InputNameGUI {
     int amountOfPeople;
-    JLabel invalidMessage;
 
-    ArrayList<JPanel> textFieldsPanels= new ArrayList<>();
-    ArrayList<JLabel> textFieldsLabels= new ArrayList<>();
-    ArrayList<JTextField> textFields= new ArrayList<>();
+    ArrayList<JPanelTemplate> textFieldsPanels= new ArrayList<>();
+    ArrayList<JLabelTemplate> textFieldsLabels= new ArrayList<>();
+    ArrayList<JTextFieldTemplate> textFields= new ArrayList<>();
 
     HashMap<String, String> peoplesName = new HashMap<>();
 
     public InputNameGUI(JFrame frame, String amountOfPeople){
         this.amountOfPeople = Integer.parseInt(amountOfPeople);
 
-        JPanel mainPanel = new JPanel();
+        JPanelTemplate mainPanel = new JPanelTemplate();
         mainPanel.setLayout(new GridLayout(this.amountOfPeople + 2, 1));
+
+        JLabelTemplate title = new JLabelTemplate("Input Nama", 24);
 
         createTextFieldPanels();
 
-        JPanel panelError = new JPanel();
-        panelError.setLayout(new FlowLayout());
-        invalidMessage = new JLabel();
-        invalidMessage.setForeground(Color.RED);
-
-        JPanel panelBtn = new JPanel();
+        JPanelTemplate panelBtn = new JPanelTemplate();
         panelBtn.setLayout(new FlowLayout());
-        JButton submitBtn = new JButton("Submit");
-        JButton backBtn = new JButton("Back");
+        JButtonTemplate submitBtn = new JButtonTemplate("Submit");
+        JButtonTemplate backBtn = new JButtonTemplate("Back");
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 boolean isValid = true;
+                String message = "";
                 for (int i=0; i<Integer.parseInt(amountOfPeople); i++){
                     if (textFields.get(i).getText().equals("")){
-                        invalidMessage.setText("Textfield can't be empty!!");
+                        message = "Textfield tidak boleh kosong!";
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
                         isValid = false;
                         break;
                     }
@@ -64,15 +64,13 @@ public class InputNameGUI {
             }
         });
 
-        addTextFieldPanels();
-        panelError.add(invalidMessage);
         panelBtn.add(submitBtn);
         panelBtn.add(backBtn);
 
+        mainPanel.add(title);
         for (int i=0; i<this.amountOfPeople; i++){
             mainPanel.add(textFieldsPanels.get(i));
         }
-        mainPanel.add(panelError);
         mainPanel.add(panelBtn);
 
         frame.add(mainPanel);
@@ -81,25 +79,24 @@ public class InputNameGUI {
 
     private void createTextFieldPanels(){
         HashMap<Integer, String> encodeNumber = new HashMap<>();
-        encodeNumber.put(1, "First");
-        encodeNumber.put(2, "Second");
-        encodeNumber.put(3, "Third");
-        encodeNumber.put(4, "Fourth");
-        encodeNumber.put(5, "Fifth");
+        encodeNumber.put(1, "Pertama");
+        encodeNumber.put(2, "Kedua");
+        encodeNumber.put(3, "Ketiga");
+        encodeNumber.put(4, "Keempat");
+        encodeNumber.put(5, "Kelima");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3,0,0,0);
         for (int i=0; i<this.amountOfPeople; i++){
-            textFieldsPanels.add(new JPanel());
-            textFieldsPanels.get(i).setLayout(new FlowLayout());
+            textFieldsPanels.add(new JPanelTemplate());
+            textFieldsPanels.get(i).setLayout(new GridBagLayout());
 
-            textFieldsLabels.add(new JLabel(String.format("%s person name: ", encodeNumber.get(i+1))));
-            textFields.add(new JTextField());
-            textFields.get(i).setColumns(10);
-        }
-    }
+            textFieldsLabels.add(new JLabelTemplate(String.format("Nama orang %s: ", encodeNumber.get(i+1))));
+            gbc.gridy = 0;
+            textFieldsPanels.get(i).add(textFieldsLabels.get(i), gbc);
 
-    private void addTextFieldPanels(){
-        for (int i=0; i<this.amountOfPeople; i++){
-            textFieldsPanels.get(i).add(textFieldsLabels.get(i));
-            textFieldsPanels.get(i).add(textFields.get(i));
+            textFields.add(new JTextFieldTemplate());
+            gbc.gridy = 1;
+            textFieldsPanels.get(i).add(textFields.get(i), gbc);
         }
     }
 }

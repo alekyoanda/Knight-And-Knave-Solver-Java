@@ -1,68 +1,57 @@
 package knightAndKnaveSolver.GUI;
 
+import knightAndKnaveSolver.GUI.JCustomTemplate.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IndexGUI {
-    JTextField amountOfPeopleTextField;
-    JLabel invalidMessage;
-    JButton submitBtn;
+    JTextFieldTemplate amountOfPeopleTextField;
 
     public IndexGUI(JFrame frame) {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(4, 1));
-
-        JPanel panel1 = new JPanel();
-        JLabel labelTitle =  new JLabel("Welcome to Knight and Knave Solver");
-
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
-        JLabel amountOfPeopleLabel = new JLabel("Amount of People: ");
-        amountOfPeopleTextField = new JTextField();
-        amountOfPeopleTextField.setColumns(10);
-
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new FlowLayout());
-        invalidMessage = new JLabel();
-        invalidMessage.setForeground(Color.RED);
-
-        JPanel panel4 = new JPanel();
-        panel2.setLayout(new FlowLayout());
-        submitBtn = new JButton("Submit");
+        JPanelTemplate mainPanel = new JPanelTemplate();
+        mainPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3,0,0,0);
+        // Membuat label baru, lalu menambahkannya ke dalam panel sesuai layout constraints
+        JLabelTemplate inputIdLabel = new JLabelTemplate("Masukkan jumlah orang yang berinteraksi:");
+        gbc.gridy = 0;
+        mainPanel.add(inputIdLabel, gbc);
+        // Membuat textfield baru, lalu menambahkannya ke dalam panel sesuai layout constraints
+        amountOfPeopleTextField = new JTextFieldTemplate();
+        gbc.gridy = 1;
+        mainPanel.add(amountOfPeopleTextField, gbc);
+        // Membuat button baru, lalu menambahkannya ke dalam panel sesuai layout constraints
+        JButtonTemplate submitBtn = new JButtonTemplate("Submit");
+        gbc.gridy = 2;
+        mainPanel.add(submitBtn, gbc);
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                String message = "";
                 if (amountOfPeopleTextField.getText().equals("")){
-                    invalidMessage.setText("Textfield can't be empty!!");
+                    message = "Textfield tidak boleh kosong!";
+                    JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
                 }
                 else if (!isNumeric(amountOfPeopleTextField.getText())){
-                    invalidMessage.setText("Input must be an integer between 0 and 6!!");
+                    message = "Isi textfield harus berupa bilangan bulat (1 sampai 5)!";
+                    JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
                 }
                 else if (Integer.parseInt(amountOfPeopleTextField.getText()) <= 0 ||
                         Integer.parseInt(amountOfPeopleTextField.getText()) > 5){
-                    invalidMessage.setText("Amount of people must be greater than 0 and less than 6!!");
+                    message = "Isi textfield harus berupa bilangan bulat (1 sampai 5)!";
+                    JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
                 }
                 else {
                     frame.remove(mainPanel);
                     new InputNameGUI(frame, amountOfPeopleTextField.getText());
                 }
+                amountOfPeopleTextField.setText("");
             }
         });
-
-        panel1.add(labelTitle);
-        panel2.add(amountOfPeopleLabel);
-        panel2.add(amountOfPeopleTextField);
-        panel3.add(invalidMessage);
-        panel4.add(submitBtn);
-
-        mainPanel.add(panel1);
-        mainPanel.add(panel2);
-        mainPanel.add(panel3);
-        mainPanel.add(panel4);
-
         frame.add(mainPanel);
         frame.setVisible(true);
     }

@@ -1,5 +1,6 @@
 package knightAndKnaveSolver.GUI;
 
+import knightAndKnaveSolver.GUI.JCustomTemplate.*;
 import knightAndKnaveSolver.Model.Model;
 
 import javax.swing.*;
@@ -11,61 +12,70 @@ import java.util.HashMap;
 
 public class InputSentencesGUI {
     int amountOfPeople;
-    JLabel outputMessage;
+    HashMap<String, String > peoplesName;
 
-    ArrayList<JPanel> textFieldsPanels= new ArrayList<>();
-    ArrayList<JLabel> textFieldsLabels= new ArrayList<>();
-    ArrayList<JTextField> textFields= new ArrayList<>();
+    ArrayList<JPanelTemplate> textFieldsPanels= new ArrayList<>();
+    ArrayList<JLabelTemplate> textFieldsLabels= new ArrayList<>();
+    ArrayList<JTextFieldTemplate> textFields= new ArrayList<>();
 
     HashMap<String, String> sentencesEachPerson = new HashMap<>();
 
     public InputSentencesGUI(JFrame frame, String amountOfPeople, HashMap<String, String> peoplesName){
         this.amountOfPeople = Integer.parseInt(amountOfPeople);
+        this.peoplesName = peoplesName;
 
-        JPanel mainPanel = new JPanel();
+        JPanelTemplate mainPanel = new JPanelTemplate();
         mainPanel.setLayout(new GridLayout(this.amountOfPeople + 2, 1));
+
+        JLabelTemplate title = new JLabelTemplate("Input Premis", 24);
 
         createTextFieldPanels();
 
-        JPanel panelOutput = new JPanel();
-        panelOutput.setLayout(new FlowLayout());
-        outputMessage = new JLabel();
-
-        JPanel panelBtn = new JPanel();
+        JPanelTemplate panelBtn = new JPanelTemplate();
         panelBtn.setLayout(new FlowLayout());
-        JButton solveBtn = new JButton("Solve");
-        JButton instructionsBtn = new JButton("Instructions");
-        JButton homeBtn = new JButton("Home");
+        JButtonTemplate solveBtn = new JButtonTemplate("Solve");
+        JButtonTemplate instructionsBtn = new JButtonTemplate("Instructions");
+        JButtonTemplate homeBtn = new JButtonTemplate("Home");
 
         solveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                Model program = new Model();
-                HashMap<String , Boolean> result = null;
+                boolean isValid = true;
+                String message = "";
                 for (int i=0; i<Integer.parseInt(amountOfPeople); i++){
-                    sentencesEachPerson.put(String.valueOf((char)(i+65)), textFields.get(i).getText());
-                }
-                System.out.println(sentencesEachPerson.toString());
-                result = Model.solveModel(sentencesEachPerson);
-
-
-                if (result == null){
-                    outputMessage.setText("No solution");
-                }
-                else{
-                    String outputString = "";
-                    for (String key: result.keySet()){
-                        if (result.get(key)){
-                            outputString += String.format("<html>%s is Knight<br>", peoplesName.get(key));
-                        }
-                        else {
-                            outputString += String.format("<html>%s is Knave<br>", peoplesName.get(key));
-                        }
+                    if (textFields.get(i).getText().equals("")){
+                        message = "Textfield tidak boleh kosong!";
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
+                        isValid = false;
+                        break;
                     }
-                    outputString += "</html>";
-                    outputMessage.setText(outputString);
                 }
+                if (isValid){
+                    Model program = new Model();
+                    HashMap<String , Boolean> result;
+                    for (int i=0; i<Integer.parseInt(amountOfPeople); i++){
+                        sentencesEachPerson.put(String.valueOf((char)(i+65)), textFields.get(i).getText());
+                    }
+                    System.out.println(sentencesEachPerson.toString());
+                    result = Model.solveModel(sentencesEachPerson);
 
+                    if (result == null){
+                        message = "Tidak ada solusi / Input tidak valid";
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Information", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        for (String key: result.keySet()){
+                            if (result.get(key)){
+                                message += String.format("<html>%s adalah Knight<br>", peoplesName.get(key));
+                            }
+                            else {
+                                message += String.format("<html>%s adalah Knave<br>", peoplesName.get(key));
+                            }
+                        }
+                        message += "</html>";
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Information", JOptionPane.INFORMATION_MESSAGE);;
+                    }
+                }
             }
         });
 
@@ -81,44 +91,39 @@ public class InputSentencesGUI {
             @Override
             public void actionPerformed(ActionEvent e){
                 frame.remove(mainPanel);
-                new IndexGUI(frame);
+                new HomeGUI(frame);
             }
         });
 
-        addTextFieldPanels();
-        panelOutput.add(outputMessage);
         panelBtn.add(solveBtn);
         panelBtn.add(instructionsBtn);
         panelBtn.add(homeBtn);
 
+        mainPanel.add(title);
         for (int i=0; i<this.amountOfPeople; i++){
             mainPanel.add(textFieldsPanels.get(i));
         }
 
-        mainPanel.add(panelOutput);
         mainPanel.add(panelBtn);
 
         frame.add(mainPanel);
         frame.setVisible(true);
     }
 
-
-
     private void createTextFieldPanels(){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3,0,0,0);
         for (int i=0; i<this.amountOfPeople; i++){
-            textFieldsPanels.add(new JPanel());
-            textFieldsPanels.get(i).setLayout(new FlowLayout());
+            textFieldsPanels.add(new JPanelTemplate());
+            textFieldsPanels.get(i).setLayout(new GridBagLayout());
 
-            textFieldsLabels.add(new JLabel(String.format("%s said: ", (char) (i+65))));
-            textFields.add(new JTextField());
-            textFields.get(i).setColumns(10);
-        }
-    }
+            textFieldsLabels.add(new JLabelTemplate(String.format("%s(%s) mengatakan: ", peoplesName.get(String.valueOf((char) (i+65))), (char) (i+65))));
+            gbc.gridy = 0;
+            textFieldsPanels.get(i).add(textFieldsLabels.get(i), gbc);
 
-    private void addTextFieldPanels(){
-        for (int i=0; i<this.amountOfPeople; i++){
-            textFieldsPanels.get(i).add(textFieldsLabels.get(i));
-            textFieldsPanels.get(i).add(textFields.get(i));
+            textFields.add(new JTextFieldTemplate());
+            gbc.gridy = 1;
+            textFieldsPanels.get(i).add(textFields.get(i), gbc);
         }
     }
 }

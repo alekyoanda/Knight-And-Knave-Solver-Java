@@ -5,11 +5,11 @@ import javax.swing.*;
 public class MainFrameGUI extends JFrame{
     public MainFrameGUI(){
         setTitle("Knight and Knave Solver");
-        setSize(450, 280);
+        setSize(550, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        new IndexGUI(this);
+        new HomeGUI(this);
     }
 
 }
