@@ -34,7 +34,7 @@ public class InputSentencesGUI {
         JPanelTemplate panelBtn = new JPanelTemplate();
         panelBtn.setLayout(new FlowLayout());
         JButtonTemplate solveBtn = new JButtonTemplate("Solve");
-        JButtonTemplate instructionsBtn = new JButtonTemplate("Instructions");
+        JButtonTemplate instructionsBtn = new JButtonTemplate("Instruksi");
         JButtonTemplate homeBtn = new JButtonTemplate("Home");
 
         solveBtn.addActionListener(new ActionListener() {
@@ -73,7 +73,7 @@ public class InputSentencesGUI {
                             }
                         }
                         message += "</html>";
-                        JOptionPane.showMessageDialog(new JFrame(), message, "Information", JOptionPane.INFORMATION_MESSAGE);;
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Solusi", JOptionPane.INFORMATION_MESSAGE);;
                     }
                 }
             }

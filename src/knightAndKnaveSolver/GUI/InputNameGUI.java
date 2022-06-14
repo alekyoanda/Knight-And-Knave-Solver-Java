@@ -31,7 +31,7 @@ public class InputNameGUI {
         JPanelTemplate panelBtn = new JPanelTemplate();
         panelBtn.setLayout(new FlowLayout());
         JButtonTemplate submitBtn = new JButtonTemplate("Submit");
-        JButtonTemplate backBtn = new JButtonTemplate("Back");
+        JButtonTemplate backBtn = new JButtonTemplate("Kembali");
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
@@ -41,6 +41,12 @@ public class InputNameGUI {
                 for (int i=0; i<Integer.parseInt(amountOfPeople); i++){
                     if (textFields.get(i).getText().equals("")){
                         message = "Textfield tidak boleh kosong!";
+                        JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
+                        isValid = false;
+                        break;
+                    }
+                    if (textFields.get(i).getText().length() > 10){
+                        message = "Panjang nama tidak boleh lebih dari 10 huruf!";
                         JOptionPane.showMessageDialog(new JFrame(), message, "Warning", JOptionPane.WARNING_MESSAGE);
                         isValid = false;
                         break;

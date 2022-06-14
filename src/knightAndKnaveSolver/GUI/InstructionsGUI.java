@@ -83,7 +83,7 @@ public class InstructionsGUI {
         randomKey1 = getRandomKey();
         randomKey2 = getRandomKey();
         String contohSintaksStr2 = String.format("<html> Contoh 2: %s mengatakan bahwa \"%s dan %s bertipe berbeda\"" +
-                        "<br>(Artinya, jika %s knave, maka pasti %s juga knight, begitu juga sebaliknya)" +
+                        "<br>(Artinya, jika %s knave, maka pasti %s knight, begitu juga sebaliknya)" +
                         " <br> Pada textfield \"%s mengatakan\" isilah sintaks %s'&lt=>%s </html>",
                 peoplesName.get("A"), peoplesName.get(randomKey1), peoplesName.get(randomKey2),
                 peoplesName.get(randomKey1), peoplesName.get(randomKey2) , peoplesName.get("A"), randomKey1, randomKey2);
@@ -97,8 +97,8 @@ public class InstructionsGUI {
         mainPanel.add(contohSintaksPanel2, gbcMain);
 
         JPanelTemplate panelBtn = new JPanelTemplate();
-        JButtonTemplate btnNext =  new JButtonTemplate("Next");
-        JButtonTemplate btnBack =  new JButtonTemplate("Back");
+        JButtonTemplate btnNext =  new JButtonTemplate("Lanjut");
+        JButtonTemplate btnBack =  new JButtonTemplate("Kembali");
         panelBtn.add(btnNext);
         panelBtn.add(btnBack);
 
