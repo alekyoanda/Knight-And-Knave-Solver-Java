@@ -53,10 +53,9 @@ public class InputSentencesGUI {
                 if (isValid){
                     Model program = new Model();
                     HashMap<String , Boolean> result;
-                    for (int i=0; i<Integer.parseInt(amountOfPeople); i++){
-                        sentencesEachPerson.put(String.valueOf((char)(i+65)), textFields.get(i).getText());
+                    for (int i=0; i<Integer.parseInt(amountOfPeople); i++) {
+                        sentencesEachPerson.put(String.valueOf((char) (i + 65)), textFields.get(i).getText());
                     }
-                    System.out.println(sentencesEachPerson.toString());
                     result = Model.solveModel(sentencesEachPerson);
 
                     if (result == null){
